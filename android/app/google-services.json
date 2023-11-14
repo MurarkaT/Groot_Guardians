@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "77341737166",
+    "project_id": "pleasemap-3a3be",
+    "storage_bucket": "pleasemap-3a3be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77341737166:android:817f333aff9e8f4477909f",
+        "android_client_info": {
+          "package_name": "com.example.kanha1011"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdeOGbxk6JBNcA61ADFB-_Fq0jwTw8P-0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
