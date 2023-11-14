@@ -38,6 +38,8 @@ dependencies:
   lottie: ^1.2.1
   google_fonts: ^6.1.0
   get: ^4.6.5
+  liquid_swipe: ^3.0.0
+  smooth_page_indicator: ^1.0.0+2
   flutter_native_splash: ^2.3.5
 dev_dependencies:
   flutter_test:
