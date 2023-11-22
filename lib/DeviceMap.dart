@@ -18,6 +18,7 @@ class _DeviceMapState  extends State<DeviceMap> {
   LatLng latlng= getLatLngFromSharedPrefs();
   late CameraPosition _initialCameraPosition;
   late MapboxMapController controller;
+  Symbol? _selectedSymbol;
 
   @override
   void initState(){
@@ -30,7 +31,7 @@ class _DeviceMapState  extends State<DeviceMap> {
     return byteData.buffer.asUint8List();
   }
 
-  _onMapCreated(MapboxMapController controller) async {
+  void _onMapCreated(MapboxMapController controller) async {
     this.controller=controller;
 
     var image1=await loadMarkerImage();
@@ -64,7 +65,7 @@ class _DeviceMapState  extends State<DeviceMap> {
               onMapCreated: _onMapCreated,
               onStyleLoadedCallback:_onStyleLoadedCallback ,
               myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
-              minMaxZoomPreference: const MinMaxZoomPreference(14, 17),
+              minMaxZoomPreference: const MinMaxZoomPreference(7, 17),
             )
           )
         ]

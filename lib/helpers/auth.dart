@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kanha1011/login.dart';
+import 'package:kanha1011/HomeManagement.dart';
+import 'package:kanha1011/authentication/login.dart';
 import 'package:kanha1011/Locate.dart';
+import 'package:kanha1011/allApps.dart';
 
 
 class Auth extends StatelessWidget{
@@ -14,7 +16,7 @@ class Auth extends StatelessWidget{
          stream: FirebaseAuth.instance.authStateChanges(),
          builder: (context,snapshot){
            if(snapshot.hasData){
-             return Locate();
+             return HomeManagement();
            }
            else{
              return Login();

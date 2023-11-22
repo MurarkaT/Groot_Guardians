@@ -42,6 +42,14 @@ dependencies:
   shared_preferences: ^2.2.0
   firebase_auth: ^4.13.0
   firebase_core: ^2.22.0
+  get: ^4.6.6
+  device_apps: ^2.2.0
+  usage_stats: ^1.2.0
+  o3d: ^1.2.0
+  intl:
+  fl_chart: ^0.64.0
+  cloud_firestore: ^4.13.1
+  tuple: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +80,9 @@ flutter:
     - assets/images/liner.png
     - assets/images/panda.gif
     - assets/images/stars.gif
+    - assets/images/biometric.png
+    - assets/images/user.png
+    - assets/animation/groot_dancing.glb
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -92,6 +103,10 @@ flutter:
     - family: VT323
       fonts:
         - asset: assets/fonts/VT323.ttf
+
+    - family: Glass Antiqua
+      fonts:
+        - asset: assets/fonts/GlassAntiqua-Regular.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

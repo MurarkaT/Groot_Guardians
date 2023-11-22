@@ -3,13 +3,14 @@ class TextBox extends StatelessWidget{
   final controller;
   final String hintText;
   final bool obscureText;
-
+  final Icon icon1;
 
   const TextBox({
     super.key,
     required this.controller,
   required this.hintText,
     required this.obscureText,
+    required this.icon1,
   });
 
 
@@ -20,6 +21,7 @@ class TextBox extends StatelessWidget{
           controller: controller,
           obscureText: obscureText,
           decoration: InputDecoration(
+            prefixIcon: icon1,
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color:Colors.white),
             ),
