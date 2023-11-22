@@ -255,7 +255,6 @@ class _AllAppsState extends State<AllApps>{
                         color:Colors.white,
                         fontSize: 10,
                       ),),
-
                     ]
                   ))));
           }

@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class ChartPainter extends CustomPainter{
@@ -6,40 +7,106 @@ class ChartPainter extends CustomPainter{
   final double min,max;
   ChartPainter(this.x,this.y,this.min,this.max);
 
+final linePaint=Paint()
+  ..color=Colors.white
+  ..style=PaintingStyle.stroke
+  ..strokeWidth=1.0;
+
+  final dotPaintFill=Paint()
+    ..color=Colors.black
+    ..style=PaintingStyle.fill
+    ..strokeWidth=1.0;
+
+  final yLabelStyle=TextStyle(color: Colors.white,fontSize: 12);
+  final xLabelStyle = TextStyle(color:Colors.white,fontSize: 16,fontWeight: FontWeight.bold);
   static double border=10.0;
+  static double radius=5.0;
   @override
   void paint(Canvas canvas, Size size) {
     final clipRect = Rect.fromLTWH(0, 0, size.width, size.height);
     canvas.clipRect(clipRect);
-   canvas.drawPaint(Paint()..color=Colors.black);
 
-   final drawableHeight = size.height -2.0*border;
-   final drawableWidth=size.width-2.0*border;
-   final hd=drawableHeight/5.0;
-   final wd=drawableWidth/this.x.length.toDouble();
+    final drawableHeight = size.height - 2.0 * border;
+    final drawableWidth = size.width - 2.0 * border;
+    final hd = drawableHeight / 5.0;
+    final wd = drawableWidth / this.x.length.toDouble();
 
 
-   final height=hd*3.0;
-   final width=drawableWidth;
-   //escape if values are invalid
+    final height = hd * 3.0;
+    final width = drawableWidth;
+    //escape if values are invalid
 
-    if(height<=0.0 || width<=0.0) return ;
-    if(max-min < 1.0e-6) return ;
+    if (height <= 0.0 || width <= 0.0) return;
+    if (max - min < 1.0e-6) return;
 
-    final hr= height/(max-min); //height per unit value
+    final hr = height / (max - min); //height per unit value
 
-    final left=border;
-    final top=border;
-    final c=Offset(left+wd/2.0,top+height/2.0);
-    _drawOutline(canvas,c,wd,height);
+    final left = border;
+    final top = border;
+    var c = Offset(left + wd / 2.0, top + height / 2.0);
+    //_drawOutline(canvas, c, wd, height);
 
-    final points=_computePoints(c,wd,height,hr);
-    points.forEach((p) {
-canvas.drawCircle(p, 10.0, Paint()..color=Colors.white);
+    final points = _computePoints(c, wd, height, hr);
+    final path = _computePath(points);
+    final labels = _computeLabels();
+
+
+    canvas.drawPath(path, linePaint);
+    _drawDataPoints(canvas,points,dotPaintFill);
+    _drawLabels(canvas, labels,points, wd,top);
+
+    //draw x labels
+    final c1=Offset(c.dx,top+4.5*hd);
+    _drawXLabels(canvas,c1,wd);
+  }
+
+  void _drawXLabels(Canvas canvas,Offset c,double wd){
+    x.forEach((xp){
+
+      drawTextCentered(canvas, c, xp, xLabelStyle, wd);
+      c+= Offset(wd,0);
     });
   }
 
-  List<Offset> _computePoints(Offset c,double width, double height,double hr){
+
+  void _drawDataPoints(Canvas canvas, List<Offset> points, Paint dotPaintFill) {
+    points.forEach((dp) { 
+      canvas.drawCircle(dp, radius, dotPaintFill);
+      canvas.drawCircle(dp, radius, linePaint);
+    });
+  }
+
+  void _drawLabels(Canvas canvas, List<String> labels,List<Offset> points, double wd,double top) {
+    var i=0;
+    labels.forEach((label) {
+      final dp=points[i];
+      final dy=(dp.dy - 15.0)<top?15.0:-15.0;
+      final ly=dp+Offset(0,dy);
+      drawTextCentered(canvas, ly, label, yLabelStyle, wd);
+      i++;
+    });
+  }
+
+
+
+  Path _computePath(List<Offset> points) {
+
+    final path=Path();
+    for(var i=0;i<points.length;i++){
+      final p=points[i];
+      if(i==0){
+        path.moveTo(p.dx, p.dy);
+      }
+      else{
+        path.lineTo(p.dx, p.dy);
+      }
+    }
+
+    return path;
+  }
+
+  List
+  <Offset> _computePoints(Offset c,double width, double height,double hr){
       List<Offset> points=[];
       y.forEach((yp) {
   final yy=height-(yp-min)*hr;
@@ -70,4 +137,24 @@ canvas.drawCircle(p, 10.0, Paint()..color=Colors.white);
       c+=Offset(width,0);
     });
   }
+  List<String> _computeLabels(){
+      return  y.map((yp)=> "${yp.toStringAsFixed(2)}").toList();
+  }
+
+
+
+TextPainter measureText(
+  String s,TextStyle style, double maxWidth,TextAlign align
+){
+  final span=TextSpan(text: s,style: style,recognizer: TapGestureRecognizer()..onTap = () => print("Hey"));
+  final tp=TextPainter(text: span,textAlign: align,textDirection: TextDirection.ltr);
+  tp.layout(minWidth: 0,maxWidth: maxWidth);
+  return tp;
 }
+
+Size drawTextCentered(Canvas canvas, Offset c, String text, TextStyle style, double maxWidth) {
+  final tp=measureText(text,style,maxWidth,TextAlign.center);
+  final offset=c+Offset(-tp.width/2.0, -tp.height/2.0);
+  tp.paint(canvas, offset);
+  return tp.size;
+}}

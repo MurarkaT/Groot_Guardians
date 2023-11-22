@@ -6,7 +6,7 @@ class Parent{
   String deviceToken;
   String latitude;
   String longitude;
-  Map<String,List<AppInfo>> mp;
+  Map<String,List<AppInfo>> mp;//date,
   String parentCode;
 
   Parent(

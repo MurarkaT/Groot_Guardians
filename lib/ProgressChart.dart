@@ -35,7 +35,8 @@ class _ProgressChartState extends State<ProgressChart> {
       _min=min;
       _max=max;
       _Y=widget.scores.map((p) => p.value).toList();
-      _X=widget.scores.map((p)=>"${WeekDays[p.time.weekday]}\n${p.time.day}").toList();
+      _X=widget.scores.map((p) => "${WeekDays[p.time.weekday]}\n${p.time.day}").toList();
+
     });
   }
   @override
