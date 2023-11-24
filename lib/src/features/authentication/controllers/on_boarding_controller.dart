@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:groot_guardians/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:liquid_swipe/PageHelpers/LiquidController.dart';
 
 import '../../../constants/colors.dart';
@@ -50,7 +53,9 @@ class OnBoardingController extends GetxController{
   skip() => controller.jumpToPage(page: 2);
   animateToNextSlide() {
     int nextPage = controller.currentPage + 1;
-    controller.animateToPage(page: nextPage);
+    child: nextPage==3?
+    Get.to(const WelcomeScreen()): controller.animateToPage(page: nextPage);
   }
   onPageChangedCallback(int activePageIndex) => currentPage.value = activePageIndex;
+
 }
