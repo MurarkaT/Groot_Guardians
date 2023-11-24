@@ -293,7 +293,7 @@ class _AllAppsState extends State<AllApps>{
                                             titleStyle: TextStyle(
                                               color:Colors.white,
                                             ),
-                                            color:Color(0xFF37E12B),
+                                            color:Color(0xFF14570F),
                                           ),
                                           PieChartSectionData(
                                             value: result[3].item1,

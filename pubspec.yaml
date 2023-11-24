@@ -50,6 +50,7 @@ dependencies:
   fl_chart: ^0.64.0
   cloud_firestore: ^4.13.1
   tuple: ^2.0.2
+  touchable: ^1.0.2
 
 dev_dependencies:
   flutter_test:

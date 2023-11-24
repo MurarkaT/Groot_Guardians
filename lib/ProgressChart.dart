@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:touchable/touchable.dart';
 import 'chart_painter.dart';
 
 class Score{
@@ -42,10 +42,10 @@ class _ProgressChartState extends State<ProgressChart> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child:CustomPaint(
-          child:Container(),
-        painter:ChartPainter(_X,_Y,_min,_max),
-      )
-    );
+      child: CanvasTouchDetector(
+      builder:(context)=> CustomPaint(
+        child: Container(),
+        painter:ChartPainter(_X,_Y,_min,_max,context),),
+    ));
   }
 }

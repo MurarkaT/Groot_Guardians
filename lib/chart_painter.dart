@@ -1,11 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:touchable/touchable.dart';
 
 class ChartPainter extends CustomPainter{
   final List<String> x;
   final List<double> y;
   final double min,max;
-  ChartPainter(this.x,this.y,this.min,this.max);
+  final BuildContext context;
+  ChartPainter(this.x,this.y,this.min,this.max,this.context);
 
 final linePaint=Paint()
   ..color=Colors.white
@@ -21,8 +23,12 @@ final linePaint=Paint()
   final xLabelStyle = TextStyle(color:Colors.white,fontSize: 16,fontWeight: FontWeight.bold);
   static double border=10.0;
   static double radius=5.0;
+
+
   @override
   void paint(Canvas canvas, Size size) {
+
+    var canvasTch=TouchyCanvas(context, canvas);
     final clipRect = Rect.fromLTWH(0, 0, size.width, size.height);
     canvas.clipRect(clipRect);
 
@@ -52,7 +58,7 @@ final linePaint=Paint()
 
 
     canvas.drawPath(path, linePaint);
-    _drawDataPoints(canvas,points,dotPaintFill);
+    _drawDataPoints(canvasTch,points,dotPaintFill);
     _drawLabels(canvas, labels,points, wd,top);
 
     //draw x labels
@@ -69,9 +75,11 @@ final linePaint=Paint()
   }
 
 
-  void _drawDataPoints(Canvas canvas, List<Offset> points, Paint dotPaintFill) {
+  void _drawDataPoints(TouchyCanvas canvas, List<Offset> points, Paint dotPaintFill) {
     points.forEach((dp) { 
-      canvas.drawCircle(dp, radius, dotPaintFill);
+      canvas.drawCircle(dp, radius, dotPaintFill,onTapDown: (tapdetail){
+        print("Hello");
+      });
       canvas.drawCircle(dp, radius, linePaint);
     });
   }
@@ -146,7 +154,7 @@ final linePaint=Paint()
 TextPainter measureText(
   String s,TextStyle style, double maxWidth,TextAlign align
 ){
-  final span=TextSpan(text: s,style: style,recognizer: TapGestureRecognizer()..onTap = () => print("Hey"));
+  final span=TextSpan(text: s,style: style);
   final tp=TextPainter(text: span,textAlign: align,textDirection: TextDirection.ltr);
   tp.layout(minWidth: 0,maxWidth: maxWidth);
   return tp;
@@ -155,6 +163,6 @@ TextPainter measureText(
 Size drawTextCentered(Canvas canvas, Offset c, String text, TextStyle style, double maxWidth) {
   final tp=measureText(text,style,maxWidth,TextAlign.center);
   final offset=c+Offset(-tp.width/2.0, -tp.height/2.0);
-  tp.paint(canvas, offset);
+  tp.paint(canvas, offset,);
   return tp.size;
 }}
