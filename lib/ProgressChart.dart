@@ -9,7 +9,8 @@ class Score{
 }
 class ProgressChart extends StatefulWidget {
   final List<Score> scores;
-  ProgressChart(this.scores);
+  DateTime dt;
+  ProgressChart(this.scores,this.dt);
 
   @override
   State<ProgressChart> createState() => _ProgressChartState();
@@ -45,7 +46,7 @@ class _ProgressChartState extends State<ProgressChart> {
       child: CanvasTouchDetector(
       builder:(context)=> CustomPaint(
         child: Container(),
-        painter:ChartPainter(_X,_Y,_min,_max,context),),
+        painter:ChartPainter(_X,_Y,_min,_max,context,widget.scores),),
     ));
   }
 }

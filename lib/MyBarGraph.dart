@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:device_apps/device_apps.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,8 @@ import 'package:intl/intl.dart';
 import 'ProgressChart.dart';
 
 class MyBarGraph extends StatefulWidget{
-  MyBarGraph({super.key});
+  List<Application> apps;
+  MyBarGraph(this.apps);
 
   @override
   _MyBarGraphState createState() => _MyBarGraphState();
@@ -22,16 +24,41 @@ class _MyBarGraphState extends State<MyBarGraph> {
   List<Score> _scores=[];
   late Map<DateTime,String> mp;
   List<dynamic>? fieldValue=[];
+  List<dynamic>? fieldValue1=[];
+  late DateTime dte;//to get data of this date
+  late Map<String,int> mappe;
 
   @override
   void initState(){
     super.initState();
+    dte=DateTime.now();
+
     getData().then((value) {
       _isLoaded=true;
       setState(() {
       });
     });
+    getListData();
+  }
 
+
+  getListData() async{
+    String stdt=new DateFormat('yyyy-MMM-dd').format(dte);
+    double totalScreenTime=0.00;
+    print("LIST");
+    try{
+      String userId=await FirebaseAuth.instance.currentUser!.uid;
+      DocumentReference docRef= FirebaseFirestore.instance.collection('p').doc(userId);
+      var snapshot = await docRef.get();
+      if(snapshot.exists){
+        setState(() {
+          fieldValue1=snapshot.get('mp')[stdt];
+          print(fieldValue1!.length);
+        });}}
+
+    catch(e){
+        print('ERROR IN GETlISTdATA: ${e}');
+    }
   }
 
 
@@ -90,12 +117,13 @@ class _MyBarGraphState extends State<MyBarGraph> {
         Scaffold(
           backgroundColor: Colors.transparent,
       body:Column(
-      children:[Container(
+      children:[
+        Container(
         margin: EdgeInsets.only(top:100),
         child:SizedBox(
           height:250.0,
           child:LayoutBuilder(builder: (context,constraints){
-            if(_isLoaded) return ProgressChart(_scores);
+            if(_isLoaded) return ProgressChart(_scores,dte);
             return Text("HEY",style: TextStyle(color: Colors.white),);
           },),
 
@@ -106,17 +134,19 @@ class _MyBarGraphState extends State<MyBarGraph> {
 
 
         Expanded(
-          child: SingleChildScrollView(
+          flex: 1,
+          child:Container(
+              width: double.infinity,
+
             child:ListView.builder(
                 shrinkWrap: true,
-              itemCount:5,
+              itemCount:fieldValue1!.length,
               itemBuilder: (context,index){
                 return Padding(
                     padding: const EdgeInsets.only(top:25.0,bottom: 25.0),
                     child:ListTile(
-                      leading: Image.asset('assets/images/user.png',color: Colors.white,),
-                      title: Text("Youtube",style: TextStyle(color: Colors.white),),
-                        trailing: Text("4.05 Hours",style: TextStyle(color: Colors.white),),
+                      title: Text(fieldValue1![index]['appName'],style: TextStyle(color: Colors.white),),
+                        trailing: Text(fieldValue1![index]['screenTime'],style: TextStyle(color: Colors.white),),
                     )
                 );
               }

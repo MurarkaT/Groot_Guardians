@@ -264,7 +264,7 @@ class _AllAppsState extends State<AllApps>{
                         padding: EdgeInsets.only(top:5,left:30,right:30),
                       child:GestureDetector(
                         behavior: HitTestBehavior.translucent,
-                          onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MyBarGraph()));},
+                          onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MyBarGraph(apps)));},
                           child:AbsorbPointer(
                       child:Stack(
                               children:[

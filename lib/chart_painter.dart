@@ -2,12 +2,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:touchable/touchable.dart';
 
+import 'ProgressChart.dart';
+
 class ChartPainter extends CustomPainter{
   final List<String> x;
   final List<double> y;
+  final List<Score> scores;
   final double min,max;
   final BuildContext context;
-  ChartPainter(this.x,this.y,this.min,this.max,this.context);
+  ChartPainter(this.x,this.y,this.min,this.max,this.context,this.scores);
 
 final linePaint=Paint()
   ..color=Colors.white
@@ -23,6 +26,8 @@ final linePaint=Paint()
   final xLabelStyle = TextStyle(color:Colors.white,fontSize: 16,fontWeight: FontWeight.bold);
   static double border=10.0;
   static double radius=5.0;
+  late DateTime dt;
+  Map<Offset,int> mp={};
 
 
   @override
@@ -76,9 +81,11 @@ final linePaint=Paint()
 
 
   void _drawDataPoints(TouchyCanvas canvas, List<Offset> points, Paint dotPaintFill) {
+    int i=0;
     points.forEach((dp) { 
       canvas.drawCircle(dp, radius, dotPaintFill,onTapDown: (tapdetail){
-        print("Hello");
+        dt=scores[mp[dp]!].time;
+        print(dt);
       });
       canvas.drawCircle(dp, radius, linePaint);
     });
@@ -116,15 +123,17 @@ final linePaint=Paint()
   List
   <Offset> _computePoints(Offset c,double width, double height,double hr){
       List<Offset> points=[];
+      int idx=0;
       y.forEach((yp) {
   final yy=height-(yp-min)*hr;
   final dp=Offset(c.dx, c.dy-height/2.0+yy);
   points.add(dp);
+  mp[dp]=idx;
+  idx++;
   c+=Offset(width,0);
 });
 
       return points;
-
   }
 
   @override
