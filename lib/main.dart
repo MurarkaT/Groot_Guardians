@@ -1,8 +1,45 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:groot_guardians/firebase_options.dart';
 import 'package:groot_guardians/src/features/authentication/screens/splash_screen/splash_screen.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:location/location.dart';
 
-void main() {
+late SharedPreferences sharedPreferences;
+void getLocation() async{
+  Location _location=Location();
+  bool? _serviceEnabled;
+  PermissionStatus? _permissionGranted;
+
+  _serviceEnabled=await _location.serviceEnabled();
+  if(_serviceEnabled){
+    _serviceEnabled = await _location.requestService();
+  }
+
+  _permissionGranted=await _location.hasPermission();
+  if(_permissionGranted==PermissionStatus.denied){
+    _permissionGranted=await _location.requestPermission();
+  }
+
+  LocationData _locationData=await _location.getLocation();
+  LatLng currentLatLng=LatLng(
+    _locationData.latitude!,_locationData.longitude!
+  );
+
+  sharedPreferences.setDouble('latitude', _locationData.latitude!);
+  sharedPreferences.setDouble('longitude', _locationData.longitude!);
+
+}
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options:DefaultFirebaseOptions.currentPlatform,
+  );
+ sharedPreferences=await SharedPreferences.getInstance();
+ getLocation();
+
   runApp(const MyApp());
 }
 

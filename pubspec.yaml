@@ -40,7 +40,23 @@ dependencies:
   get: ^4.6.5
   liquid_swipe: ^3.0.0
   smooth_page_indicator: ^1.0.0+2
-  flutter_native_splash: ^2.3.5
+  mapbox_gl: ^0.16.0
+  location: ^5.0.0
+  flutter_dotenv: ^5.0.2
+  shared_preferences: ^2.2.0
+  firebase_auth: ^4.13.0
+  firebase_core: ^2.22.0
+  device_apps: ^2.2.0
+  usage_stats: ^1.2.0
+  o3d: ^1.2.0
+  intl:
+  fl_chart: ^0.64.0
+  cloud_firestore: ^4.13.1
+  tuple: ^2.0.2
+  touchable: ^1.0.2
+  flutter_native_splash: ^2.2.16
+  google_sign_in: ^6.1.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -77,6 +93,8 @@ flutter:
     - assets/images/on_boarding_images/
     - assets/images/welcome_images/
     - assets/logo/
+    - assets/images/
+    - assets/animation/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -94,16 +112,17 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins.ttf
+
+    - family: VT323
+      fonts:
+        - asset: assets/fonts/VT323.ttf
+    - family: Glass Antiqua
+      fonts:
+        - asset: assets/fonts/GlassAntiqua-Regular.ttf
   #         weight: 700
   #
   # For details regarding fonts from package dependencies,

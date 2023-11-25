@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = '1.9.10'
     repositories {
         google()
         mavenCentral()
@@ -15,6 +15,17 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                username = "mapbox"
+                password = project.properties['sk.eyJ1Ijoic3NvMSIsImEiOiJjbG9yNjV5MGUwcmZ0MmtscW12ajg2N3BtIn0.TjZiXFuf1hqW-ifKYjmP_w']
+            }
+        }
     }
 }
 

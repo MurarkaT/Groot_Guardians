@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:groot_guardians/authentication2/signup.dart';
 
+import '../../../../../helpers/auth.dart';
 import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../constants/sizes.dart';
@@ -49,14 +51,14 @@ class WelcomeScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () => Get.to(() => const LoginScreen()),
+                    onPressed: () => Get.to(() => const Auth()),
                     child: Text(tLogin.toUpperCase(),style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.amber,fontSize: 14)),),
                   ),
                 ),
                 const SizedBox(width: 10.0),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => Get.to(() => SignUp()),
                     child: Text(tSignup.toUpperCase(),style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black,fontSize: 14)),),
                   ),
                 ),
