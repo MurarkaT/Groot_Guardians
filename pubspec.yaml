@@ -56,6 +56,10 @@ dependencies:
   touchable: ^1.0.2
   flutter_native_splash: ^2.2.16
   google_sign_in: ^6.1.6
+  hive: ^2.2.3
+  flutter_slidable: ^3.0.1
+  flutter_heatmap_calendar: ^1.0.5
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:

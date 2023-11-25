@@ -11,12 +11,14 @@ import 'package:groot_guardians/components/Button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:groot_guardians/homepage.dart';
+import 'package:groot_guardians/main.dart';
 import 'package:groot_guardians/schema/parent.dart';
 import 'package:groot_guardians/src/features/authentication/screens/welcome/welcome_screen.dart';
 
 import '../src/constants/image_strings.dart';
 import '../src/constants/sizes.dart';
 import '../src/constants/text_strings.dart';
+import 'login2.dart';
 class Login extends StatefulWidget{
   Login({super.key});
 
@@ -35,6 +37,10 @@ class _LoginState extends State<Login> {
         email: usernameController.text,
         password: passwordController.text,
       );
+
+      String pid=await FirebaseAuth.instance.currentUser!.uid;
+      sharedPreferences.setString('parentUid', pid);
+      Navigator.push(context,MaterialPageRoute(builder: (context)=> Login2()));
     } on FirebaseAuthException catch (e) {
       if(e.code=='user-not-found'){
         print("USER NOT FOUND");

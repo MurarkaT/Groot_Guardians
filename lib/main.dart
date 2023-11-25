@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:groot_guardians/firebase_options.dart';
 import 'package:groot_guardians/src/features/authentication/screens/splash_screen/splash_screen.dart';
+import 'package:hive/hive.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:location/location.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 late SharedPreferences sharedPreferences;
 void getLocation() async{
@@ -32,6 +34,7 @@ void getLocation() async{
   sharedPreferences.setDouble('longitude', _locationData.longitude!);
 
 }
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -39,7 +42,8 @@ void main() async{
   );
  sharedPreferences=await SharedPreferences.getInstance();
  getLocation();
-
+  await Hive.initFlutter();
+  await Hive.openBox("Habit_Database");
   runApp(const MyApp());
 }
 

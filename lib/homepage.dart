@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:groot_guardians/home_page.dart';
 
 import 'DeviceMap.dart';
 import 'allApps.dart';
@@ -37,7 +38,7 @@ class HomePage extends StatelessWidget {
                         Icon(
                           Icons.location_on,
                           color: Colors.white,
-                          size: 70,
+                          size: 60,
                         ),
                         SizedBox(height: 5),
                         Text(
@@ -65,7 +66,7 @@ class HomePage extends StatelessWidget {
                         Icon(
                           Icons.watch_later_outlined,
                           color: Colors.white,
-                          size: 70,
+                          size: 60,
                         ),
                         SizedBox(height: 5),
                         Text(
@@ -80,6 +81,34 @@ class HomePage extends StatelessWidget {
                           ),
                           onPressed: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>AllApps()));
+                          },
+                        ),
+                      ],
+                    )
+                ),
+                GlassBox(height: 380, width: 180,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      //crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.check_circle,
+                          color: Colors.white,
+                          size: 60,
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          'Track your child\'s daily habits.',
+                          style: GoogleFonts.shadowsIntoLightTwo(textStyle: TextStyle(color: Colors.white,fontSize: 21)),),
+                        //SizedBox(height: 5),
+                        IconButton(
+                          icon: Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                          onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage2()));
                           },
                         ),
                       ],

@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:groot_guardians/authentication2/signup.dart';
 
+import '../../../../../authentication2/login.dart';
 import '../../../../../helpers/auth.dart';
 import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
@@ -51,7 +52,7 @@ class WelcomeScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () => Get.to(() => const Auth()),
+                    onPressed: () => Get.to(() => Login()),
                     child: Text(tLogin.toUpperCase(),style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.amber,fontSize: 14)),),
                   ),
                 ),

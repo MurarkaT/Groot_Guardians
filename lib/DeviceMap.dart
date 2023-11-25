@@ -83,7 +83,7 @@ class _DeviceMapState  extends State<DeviceMap> {
       body: Column(
             children: [
               SizedBox(
-                  height: MediaQuery.of(context).size.height,
+                  height: MediaQuery.of(context).size.height*0.8,
                   child: MapboxMap(
                     accessToken: "pk.eyJ1Ijoic3NvMSIsImEiOiJjbG9tdDdjdm4wNnp6MnZxczN1Z2NsZHdkIn0.nQ0C7w4pXOWZ82SlLU56Jw",
                     initialCameraPosition:_initialCameraPosition ,

@@ -13,14 +13,14 @@ import '../src/constants/image_strings.dart';
 import '../src/constants/sizes.dart';
 import '../src/constants/text_strings.dart';
 import 'login2.dart';
-class SignUp extends StatefulWidget{
-  SignUp({super.key});
+class SignUp2 extends StatefulWidget{
+  SignUp2({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<SignUp2> createState() => _SignUpState2();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpState2 extends State<SignUp2> {
   final usernameController=TextEditingController();
 
   final passwordController=TextEditingController();
@@ -36,7 +36,7 @@ class _SignUpState extends State<SignUp> {
       await FirebaseFirestore.instance.collection('p').doc(credential.user!.uid).set(parent.toJSON());
 
       sharedPreferences.setString('parentUid', credential.user!.uid);
-      Navigator.push(context,MaterialPageRoute(builder: (context)=> Login2()));
+      Navigator.push(context,MaterialPageRoute(builder: (context)=> HomePage()));
 
     } on FirebaseAuthException catch(e){
       print(e);
@@ -116,16 +116,16 @@ class _SignUpState extends State<SignUp> {
                       child: Center(
                           child:Column(
                               children:[
-                               Column(
-                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                 children: [
-                                   Image(
-                                       image: const AssetImage(tWelcomeScreenImage1),
-                                       height: size.height * 0.2),
-                                   Text("Welcome!", style: GoogleFonts.shadowsIntoLightTwo(textStyle: TextStyle(color: Colors.amber,fontSize: 33)),),
-                                   Text("Your child's digital safety journey begins here.", style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.orange,fontSize: 15)),),
-                                 ],
-                               ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Image(
+                                        image: const AssetImage(tWelcomeScreenImage1),
+                                        height: size.height * 0.2),
+                                    Text("Welcome!", style: GoogleFonts.shadowsIntoLightTwo(textStyle: TextStyle(color: Colors.amber,fontSize: 33)),),
+                                    Text("Your child's digital safety journey begins here.", style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.orange,fontSize: 15)),),
+                                  ],
+                                ),
                                 SizedBox(height:25),
 
                                 TextBox(

@@ -1,51 +1,62 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:groot_guardians/authentication2/signup.dart';
 import 'package:groot_guardians/components/text_box.dart';
 import 'package:groot_guardians/components/Button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:groot_guardians/homepage.dart';
 import 'package:groot_guardians/main.dart';
+import 'package:groot_guardians/schema/parent.dart';
+import 'package:groot_guardians/src/features/authentication/screens/welcome/welcome_screen.dart';
 
-import '../components/Button.dart';
-import '../schema/parent.dart';
 import '../src/constants/image_strings.dart';
 import '../src/constants/sizes.dart';
 import '../src/constants/text_strings.dart';
-import 'login2.dart';
-class SignUp extends StatefulWidget{
-  SignUp({super.key});
+class Login2 extends StatefulWidget{
+  Login2({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<Login2> createState() => _LoginState2();
 }
 
-class _SignUpState extends State<SignUp> {
+class _LoginState2 extends State<Login2> {
   final usernameController=TextEditingController();
 
   final passwordController=TextEditingController();
 
+  void signUserIn() async{
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: usernameController.text,
+        password: passwordController.text,
+      );
 
-  void signUserUp () async {
-    try{
-      UserCredential credential=await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: usernameController.text,
-          password: passwordController.text);
-
-      Parent parent=new Parent(credential.user!.uid,'','','','',{},'');
-      await FirebaseFirestore.instance.collection('p').doc(credential.user!.uid).set(parent.toJSON());
-
-      sharedPreferences.setString('parentUid', credential.user!.uid);
-      Navigator.push(context,MaterialPageRoute(builder: (context)=> Login2()));
-
-    } on FirebaseAuthException catch(e){
-      print(e);
-      invalidDialog(e.toString());
+      String pid=await FirebaseAuth.instance.currentUser!.uid;
+      sharedPreferences.setString('parentUid', pid);
+      Navigator.push(context,MaterialPageRoute(builder: (context)=> HomePage()));
+    } on FirebaseAuthException catch (e) {
+      if(e.code=='user-not-found'){
+        print("USER NOT FOUND");
+        wrongEmailDialog();
+      }
+      else if(e.code=='wrong-password'){
+        wrongPasswordDialog();
+      }
+      else invalidDialog();
     }
-
-
   }
-  void invalidDialog(String err){
+
+
+
+
+
+  void invalidDialog(){
     Widget okButton=TextButton(
       child:Text("OK"),
       onPressed: (){
@@ -55,7 +66,7 @@ class _SignUpState extends State<SignUp> {
 
     AlertDialog alert=AlertDialog(
       title:Text("Wrong Credentials"),
-      content: Text(err),
+      content: Text("Your email or password might be wrong"),
       actions: [
         okButton,
       ],
@@ -99,6 +110,8 @@ class _SignUpState extends State<SignUp> {
       return alert;
     });
   }
+
+
   @override
   Widget build(BuildContext context){
     final size=MediaQuery.of(context).size;
@@ -116,29 +129,29 @@ class _SignUpState extends State<SignUp> {
                       child: Center(
                           child:Column(
                               children:[
-                               Column(
-                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                 children: [
-                                   Image(
-                                       image: const AssetImage(tWelcomeScreenImage1),
-                                       height: size.height * 0.2),
-                                   Text("Welcome!", style: GoogleFonts.shadowsIntoLightTwo(textStyle: TextStyle(color: Colors.amber,fontSize: 33)),),
-                                   Text("Your child's digital safety journey begins here.", style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.orange,fontSize: 15)),),
-                                 ],
-                               ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Image(
+                                        image: const AssetImage(tWelcomeScreenImage1),
+                                        height: size.height * 0.2),
+                                    Text(tLoginTitle, style: GoogleFonts.shadowsIntoLightTwo(textStyle: TextStyle(color: Colors.amber,fontSize: 33)),),
+                                    Text(tLoginSubTitle, style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.orange,fontSize: 15)),),
+                                  ],
+                                ),
                                 SizedBox(height:25),
-
                                 TextBox(
                                     controller: usernameController,
                                     hintText: 'Email',
                                     obscureText: false,
-                                    icon1:Icon(Icons.email,color:Colors.white)
+                                    icon1:Icon(Icons.account_circle_outlined,color:Colors.white)
                                 ),
                                 TextBox(
                                   controller: passwordController,
                                   hintText: 'Password',
                                   obscureText: true,
                                   icon1:Icon(Icons.fingerprint,color:Colors.white),
+
                                 ),
 
                                 SizedBox(height: 20,),
@@ -147,18 +160,16 @@ class _SignUpState extends State<SignUp> {
                                       mainAxisAlignment: MainAxisAlignment.center ,//Center Row contents horizontally,
                                       crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
                                       children: [
-                                        Text("Already Have an Account?",style:TextStyle(fontFamily: 'VT323',color: Colors.white,fontSize: 20)),
-                                        TextButton(child:Text('Log In',style: TextStyle(fontFamily: 'VT323',color: Colors.red,fontSize: 20)),onPressed: (){
-
+                                        Text("Don't have an Account?",style:TextStyle(fontFamily: 'VT323',color: Colors.white,fontSize: 20)),
+                                        TextButton(child:Text('Sign Up',style: TextStyle(fontFamily: 'VT323',color: Colors.red,fontSize: 20)),onPressed: (){
+                                          Navigator.push(context, MaterialPageRoute(builder: (context)=> SignUp()));
                                         },),
                                       ],
                                     )),
                                 SizedBox(height: 20,),
                                 Button(
-                                  onTap: (){
-                                    signUserUp();
-                                  },
-                                  text1:"Sign In",
+                                  onTap: signUserIn,
+                                  text1:"LOGIN",
                                 ),
 
                               ]

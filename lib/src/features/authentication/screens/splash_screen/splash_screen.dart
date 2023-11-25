@@ -53,10 +53,11 @@ class SplashScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 30),
                     Text(tApp, style: GoogleFonts.shadowsIntoLight(
                       textStyle: TextStyle(color: Colors.orange,fontSize: 30)
                     ),),
-                    SizedBox(height: 30),
+
                     Text(tAppName,style: GoogleFonts.shadowsIntoLightTwo(textStyle: TextStyle(color: Colors.amber,fontSize: 44,height: 1.0)),),
                     Text(tAppTagLine, style: GoogleFonts.shadowsIntoLight(
                         textStyle: TextStyle(color: Colors.orange,fontSize: 25,height: 1.0)

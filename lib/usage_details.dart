@@ -144,11 +144,13 @@ class _UsageDetailsState extends State<UsageDetails>{
                         )),
                   ],
                 )),
-            Container(child:O3D(src:'assets/animation/groot_dancing.glb',
-              controller: o3dController,
-              autoPlay: true,
+            SizedBox(height: 50),
+            Center(
+              child: Container(
+                child:
+                Image.asset("assets/images/pngwing.com.png",height: 200),
+              ),
             ),
-              margin: EdgeInsets.only(top: 250),),
           ]);
   }
 }
