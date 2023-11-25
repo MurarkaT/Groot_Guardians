@@ -21,7 +21,7 @@ class GlassBox extends StatelessWidget {
         //borderRadius: BorderRadius.circular(20),
         child: Container(
           width: 300,
-          height: 150,
+          height: 250,
           child: Stack(
             children: [
               //blur effect

@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
                 Text("Hello Guardian,", style: GoogleFonts.shadowsIntoLightTwo(textStyle: TextStyle(color: Colors.white,fontSize: 33)),),
                 Text("Select an option below to tailor your child's", style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white,fontSize: 15)),),
                 Text("online safety.", style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white,fontSize: 15)),),
-                SizedBox(height: 35),
+                SizedBox(height: 40),
                 GlassBox(height: 380, width: 180,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
                         Icon(
                           Icons.location_on,
                           color: Colors.white,
-                          size: 60,
+                          size: 70,
                         ),
                         SizedBox(height: 5),
                         Text(
@@ -51,7 +51,7 @@ class HomePage extends StatelessWidget {
                             size: 30,
                           ),
                           onPressed: (){
-                            DeviceMap();
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>DeviceMap()));
                           },
                         ),
                       ],
@@ -65,7 +65,7 @@ class HomePage extends StatelessWidget {
                         Icon(
                           Icons.watch_later_outlined,
                           color: Colors.white,
-                          size: 60,
+                          size: 70,
                         ),
                         SizedBox(height: 5),
                         Text(
@@ -85,34 +85,6 @@ class HomePage extends StatelessWidget {
                       ],
                     )
                 ),
-                GlassBox(height: 380, width: 180,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      //crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          color: Colors.white,
-                          size: 60,
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'Track your child\'s live location here',
-                          style: GoogleFonts.shadowsIntoLightTwo(textStyle: TextStyle(color: Colors.white,fontSize: 21)),),
-                        //SizedBox(height: 5),
-                        IconButton(
-                          icon: Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                            size: 30,
-                          ),
-                          onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>DeviceMap()));
-                          },
-                        ),
-                      ],
-                    )
-                )
               ],
             ),
           ),

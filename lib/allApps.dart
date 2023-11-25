@@ -13,6 +13,7 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'MyBarGraph.dart';
+import 'homepage.dart';
 import 'main2.dart';
 import 'schema/app_info.dart';
 import 'package:tuple/tuple.dart';
@@ -197,7 +198,7 @@ class _AllAppsState extends State<AllApps>{
 
                   builder:(context,snapshot){
                     if(!snapshot.hasData){
-                      return Container(child:Text("We do not have any apps installed",style:TextStyle(decoration: TextDecoration.none)),);
+                      return Container(child:Text("We do not have any apps installed",style:TextStyle(decoration: TextDecoration.none,fontSize: 1,color: Colors.black)),);
                     }
 
                     List<Application> apps=snapshot.data as List<Application>;
@@ -215,9 +216,12 @@ class _AllAppsState extends State<AllApps>{
                                       color: Colors.white,
                                       fontSize: 30,
                                       fontFamily: 'Glass Antiqua',
-
+                                      decoration: TextDecoration.none
                                     ),),
-                                    IconButton(onPressed: () async{await FirebaseAuth.instance.signOut();},
+                                    IconButton(onPressed: () async{await FirebaseAuth.instance.signOut();
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                                      return HomePage();
+                                    }));},
                                         icon: Icon(Icons.logout,color: Colors.white,))
                                   ]
                               ),
@@ -254,6 +258,7 @@ class _AllAppsState extends State<AllApps>{
                                                           Text('${apps[index].appName}',style: TextStyle(
                                                             fontFamily: 'Poppins',
                                                             color:Colors.white,
+                                                            decoration: TextDecoration.none,
                                                             fontSize: 10,
                                                           ),),
                                                         ]
@@ -276,7 +281,9 @@ class _AllAppsState extends State<AllApps>{
                                                                 value: result[0].item1,
                                                                 title: result[0].item2,
                                                                 titleStyle: TextStyle(
+                                                                  fontSize: 12,
                                                                   color:Colors.white,
+                                                                  decoration: TextDecoration.none,
                                                                 ),
                                                                 color:Color(0xFFA30C1B),
                                                               ),
@@ -284,14 +291,19 @@ class _AllAppsState extends State<AllApps>{
                                                                 value: result[1].item1,
                                                                 title: result[1].item2,
                                                                 titleStyle: TextStyle(
+                                                                  fontSize: 12,
+                                                                  decoration: TextDecoration.none,
                                                                   color:Colors.white,
                                                                 ),
-                                                                color:Color(0xFFE0AAE8),
+                                                                color:Color(
+                                                                    0xFF249254),
                                                               ),
                                                               PieChartSectionData(
                                                                 value: result[2].item1,
                                                                 title: result[2].item2,
                                                                 titleStyle: TextStyle(
+                                                                  fontSize: 12,
+                                                                  decoration: TextDecoration.none,
                                                                   color:Colors.white,
                                                                 ),
                                                                 color:Color(0xFF14570F),
@@ -300,6 +312,8 @@ class _AllAppsState extends State<AllApps>{
                                                                 value: result[3].item1,
                                                                 title: result[3].item2,
                                                                 titleStyle: TextStyle(
+                                                                  fontSize: 12,
+                                                                  decoration: TextDecoration.none,
                                                                   color:Colors.white,
                                                                 ),
                                                                 color:Color(0xFFFADB01),
@@ -308,7 +322,7 @@ class _AllAppsState extends State<AllApps>{
                                                         )
                                                     ),
 
-                                                    Center(child:Text(date!,style: TextStyle(color: Colors.white),)),
+                                                    Center(child:Text(date!,style: TextStyle(color: Colors.white,fontSize: 14,decoration: TextDecoration.none),)),
                                                   ]
                                               )))
 
